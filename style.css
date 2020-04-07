@@ -1,3 +1,132 @@
+html * {
+  padding: 0;
+  margin: 0;
+  box-sizing: border;
+
+}
+
 body {
-    font-size: 15pt;
+  font-size: 12pt;
+}
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+}
+
+.player {
+  width: 320px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 0;
+  height: 100vh;
+  align-items: flex-start;
+}
+
+.player_left-panel {
+  width: 40px;
+  height: 200px;
+  background-color: lightgray;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.player_right-panel {
+  width: 280px;
+  height: 200px;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.player_equilizer {
+  width: 100%;
+  height: 100px;
+  background-color: navy;
+  margin: 0;
+  padding: 0;
+}
+
+.player_control-buttons {
+  width: 170px;
+  height: 50px;
+  background-color: white;
+  margin: 0;
+  padding: 0;
+}
+
+.player_control-volume {
+  width: 110px;
+  height: 50px;
+  background-color: white;
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+ul li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  justify-content: center;
+  align-content: center;
+}
+
+li a {
+  width: 100%;
+  height: 100%;
+}
+
+.player_control-buttons_play {
+  background-image: url(i/play.svg);
+}
+
+.player_control-buttons_stop {
+  background-image: url(i/stop.svg);
+}
+
+.player_control-buttons_next {
+  background-image: url(i/next.svg);
+}
+
+.player_control-buttons_soft {
+  background-image: url(i/soft.svg);
+  background-size: cover;
+}
+
+.player_control-buttons_prev {
+  background-image: url(i/prev.svg);
+  background-size: cover;
+}
+
+.player_settings {
+  background-size: cover;
+  background-image: url(i/settings.svg)
+}
+
+.player_playlist {
+  background-size: cover;
+  background-image: url(i/playlist.svg)
+}
+
+.player_equalizer {
+  background-size: cover;
+  background-image: url(i/equalizer.svg)
 }
