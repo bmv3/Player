@@ -1,6 +1,6 @@
 class Buffer {
 
-  constructor(context, urls) {  
+  constructor(context, urls) {
     this.context = context;
     this.urls = urls;
     this.buffer = [];
@@ -12,14 +12,11 @@ class Buffer {
     request.responseType = 'arraybuffer';
     let thisBuffer = this;
     request.onload = function() {
-      thisBuffer.context.decodeAudioData(
-        request.response, 
-        function(buffer) {
-          thisBuffer.buffer[index] = buffer;
-         // updateProgress(thisBuffer.urls.length);
-          if(index == thisBuffer.urls.length-1) {
-            thisBuffer.loaded();
-          }       
+      thisBuffer.context.decodeAudioData(request.response, function(buffer) {
+        thisBuffer.buffer[index] = buffer;
+        if (index == thisBuffer.urls.length - 1) {
+          thisBuffer.loaded();
+        }
       });
     };
     request.send();

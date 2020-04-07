@@ -27,15 +27,15 @@
   prevButton.onclick = () => prev();
 
 
+  let buffer = new Buffer(context, playlist);
+  buffer.loadAll();
+    
   function play(playlist) {
-    let buffer = new Buffer(context, playlist);
-    buffer.loadAll();
-    console.log('play');
 
     let sound = new Sound(context, buffer.getSoundByIndex(currentTrack));
-    console.log(buffer.getSoundByIndex(currentTrack));
     sound.play();
-
+    console.log('play');
+    console.log(buffer.getSoundByIndex(currentTrack));
     /*
     const source = context.createBufferSource();
     source.buffer = audioBuffer;
