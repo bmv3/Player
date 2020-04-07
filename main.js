@@ -16,6 +16,7 @@
   const playButton = document.querySelector('#play');
   const nextButton = document.querySelector('#next');
   const prevButton = document.querySelector('#prev');
+  const softButton = document.querySelector('#soft');
   const highButton = document.querySelector('#volumeHigh');
   const lowButton = document.querySelector('#volumeLow');
 
@@ -25,30 +26,32 @@
   playButton.onclick = () => play(playlist);
   nextButton.onclick = () => next();
   prevButton.onclick = () => prev();
+  softButton.onclick = () => soft();
 
 
   let buffer = new Buffer(context, playlist);
   buffer.loadAll();
+  
+  let sound = new Sound(context, buffer.getSoundByIndex(currentTrack));
     
   function play(playlist) {
-
-    let sound = new Sound(context, buffer.getSoundByIndex(currentTrack));
+    sound = new Sound(context, buffer.getSoundByIndex(currentTrack));
     sound.play();
     console.log('play');
     console.log(buffer.getSoundByIndex(currentTrack));
-    /*
-    const source = context.createBufferSource();
-    source.buffer = audioBuffer;
-    source.connect(context.destination);
-    source.start();
-    */
+  }
+  
+  
+  function soft() {
+    console.log('Soft stop');
+    sound.setValueAtTime(0.5, now);
   }
 
   function next() {
     currentTrack >= playlist.length ? currentTrack = playlist.length : ++currentTrack;
     console.log(currentTrack);
   }
-
+  
   function prev() {
     currentTrack = currentTrack <= 0 ? currentTrack = 0 : --currentTrack;
     console.log(currentTrack);
