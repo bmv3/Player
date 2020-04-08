@@ -18,11 +18,11 @@
   const prevButton = document.querySelector('#prev');
   const softButton = document.querySelector('#soft');
   const highButton = document.querySelector('#volumeHigh');
-  const lowButton = document.querySelector('#volumeLow');
+  const lowButton  = document.querySelector('#volumeLow');
 
 
   highButton.onclick = () => volumeHigh(playlist);
-  lowButton.onclick = () => volumeLow(playlist);
+  lowButton.onclick  = () => volumeLow(playlist);
   playButton.onclick = () => play(playlist);
   nextButton.onclick = () => next();
   prevButton.onclick = () => prev();
