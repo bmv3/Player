@@ -36,32 +36,33 @@ class Player {
   }
   
   play() {
-    console.log(this.buffer.getSound());
-    
     this.sound = new Sound(this.context, this.buffer.getSound());
     this.sound.play();
     console.log('play');
   }
   
   next() {
-    this.currentTrack >= this.playlist.length ? this.currentTrack = this.playlist.length : ++this.currentTrack;
     this.sound.stop();
+    this.playlist.next();
+    console.log(this.playlist.getCurrent())
   }
   
   prev() {
-    this.currentTrack = this.currentTrack <= 0 ? this.currentTrack = 0 : --this.currentTrack;
     this.sound.stop();
+    this.playlist.prev();
+    console.log(this.playlist.getCurrent())
   }
   
   stop() {
+    console.log(this.sound);
     this.sound.stop();
+    console.log('Stop');
   }
   
   soft() {
+    this.sound.soft();
     console.log('Soft stop');
-    console.log(typeof this.context);
-    this.sound.setValueAtTime(0.5, this.context.currentTime);
-    this.sound.stop();
+    console.log(typeof this.context);  
   }
   
 }

@@ -26,5 +26,11 @@ class Sound {
     this.gainNode.gain.exponentialRampToValueAtTime(0.01, this.context.currentTime + 0.5);
     this.source.stop(this.context.currentTime + 0.5);
   }
+  
+  soft() {
+    this.gainNode.gain.setValueAtTime(0.5, this.context.currentTime);
+    this.source.stop(5);
+  }
+  
 
 }
