@@ -29,10 +29,12 @@ class Player {
 
   volumeHigh() {
     this.volume = this.volume >= 100 ? this.volume = 100 : ++this.volume;
+    this.sound.setVolume(this.volume);
   }
 
   volumeLow() {
     this.volume = this.volume <= 0 ? this.volume = 0 : --this.volume;
+    this.sound.setVolume(this.volume);
   }
   
   play() {

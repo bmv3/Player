@@ -13,8 +13,6 @@ class Sound {
     this.source.buffer = this.buffer;
     this.source.connect(this.gainNode);
     this.gainNode.connect(this.context.destination);
-    
-    this.gainNode.gain.setValueAtTime(0.8, this.context.currentTime);
   }
 
   play() {
@@ -32,5 +30,12 @@ class Sound {
     this.source.stop(5);
   }
   
+  
+  setVolume(volume) {
+    this.gainNode.gain.value = volume / 100;
+    this.gainNode.gain.setValueAtTime(this.gainNode.gain.value, this.context.currentTime);
+    
+    console.log(this.gainNode.gain.value);
+  }
 
 }
