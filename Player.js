@@ -3,8 +3,13 @@
 
 class Player {
   constructor(playlist) {
+    this.currentTrack = 0;
+    this.volume = 0;
     
     this.context = new AudioContext();
+    this.playlist = new Playlist(playlist);
+    this.buffer = new Buffer(this.context, [this.playlist.getCurrent()]);    
+
     this.highButton = document.querySelector('#volumeHigh');
     this.lowButton = document.querySelector('#volumeLow');
     this.playButton = document.querySelector('#play');
@@ -20,17 +25,8 @@ class Player {
     this.prevButton.onclick = () => this.prev();
     this.stopButton.onclick = () => this.stop();
     this.softButton.onclick = () => this.soft();
-    
-    this.currentTrack = 0;
-    this.volume = 0;
-    this.playlist = playlist;
-    
-    this.buffer = new Buffer(this.context, playlist);
-    this.buffer.loadAll();
-  
-    this.sound = new Sound(this.context, this.buffer.getSoundByIndex(this.currentTrack));
   }
-  
+
   volumeHigh() {
     this.volume = this.volume >= 100 ? this.volume = 100 : ++this.volume;
   }
@@ -40,7 +36,9 @@ class Player {
   }
   
   play() {
-    this.sound = new Sound(this.context, this.buffer.getSoundByIndex(this.currentTrack));
+    console.log(this.buffer.getSound());
+    
+    this.sound = new Sound(this.context, this.buffer.getSound());
     this.sound.play();
     console.log('play');
   }
@@ -48,12 +46,12 @@ class Player {
   next() {
     this.currentTrack >= this.playlist.length ? this.currentTrack = this.playlist.length : ++this.currentTrack;
     this.sound.stop();
-}
+  }
   
   prev() {
     this.currentTrack = this.currentTrack <= 0 ? this.currentTrack = 0 : --this.currentTrack;
     this.sound.stop();
-}
+  }
   
   stop() {
     this.sound.stop();

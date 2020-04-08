@@ -6,7 +6,6 @@ class Buffer {
     this.context = context;
     this.urls = urls;
     this.buffer = [];
-    this.loadAll();
   }
 
   loadSound(url, index) {
@@ -35,8 +34,8 @@ class Buffer {
     // what happens when all the files are loaded
   }
 
-  getSound() {
-    return this.buffer[0];
+  getSoundByIndex(index) {
+    return this.buffer[index];
   }
 
 }

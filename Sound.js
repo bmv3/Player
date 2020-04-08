@@ -7,14 +7,6 @@ class Sound {
     this.buffer = buffer;
   }
 
-  init() {
-    this.gainNode = this.context.createGain();
-    this.source = this.context.createBufferSource();
-    this.source.buffer = this.buffer;
-    this.source.connect(this.gainNode);
-    this.gainNode.connect(this.context.destination);
-  }
-  
   setup() {
     this.gainNode = this.context.createGain();
     this.source = this.context.createBufferSource();
