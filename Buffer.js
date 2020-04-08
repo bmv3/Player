@@ -1,3 +1,5 @@
+'use strict';
+
 class Buffer {
 
   constructor(context, urls) {

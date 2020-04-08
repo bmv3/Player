@@ -1,3 +1,5 @@
+'use strict';
+
 class Sound {
 
   constructor(context, buffer) {
