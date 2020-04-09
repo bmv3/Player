@@ -1,6 +1,5 @@
 'use strict';
 
-
 class Player {
   constructor(playlist) {
     this.currentTrack = 0;
@@ -9,15 +8,17 @@ class Player {
     this.context = new AudioContext();
     this.playlist = new Playlist(playlist);
     this.buffer = new Buffer(this.context, [this.playlist.getCurrent()]);    
-
+    
+    // получаем элементы фронтэнда
     this.highButton = document.querySelector('#volumeHigh');
-    this.lowButton = document.querySelector('#volumeLow');
+    this.lowButton  = document.querySelector('#volumeLow');
     this.playButton = document.querySelector('#play');
     this.nextButton = document.querySelector('#next');
     this.prevButton = document.querySelector('#prev');
     this.stopButton = document.querySelector('#stop');
     this.softButton = document.querySelector('#soft');
     
+    // связывает фрронтэнд с функционалом
     this.highButton.onclick = () => this.volumeHigh();
     this.lowButton.onclick  = () => this.volumeLow();
     this.playButton.onclick = () => this.play();
@@ -40,31 +41,24 @@ class Player {
   play() {
     this.sound = new Sound(this.context, this.buffer.getSound());
     this.sound.play();
-    console.log('play');
   }
   
   next() {
     this.sound.stop();
     this.playlist.next();
-    console.log(this.playlist.getCurrent())
   }
   
   prev() {
     this.sound.stop();
     this.playlist.prev();
-    console.log(this.playlist.getCurrent())
-  }
+  } 
   
   stop() {
-    console.log(this.sound);
     this.sound.stop();
-    console.log('Stop');
   }
   
   soft() {
     this.sound.soft();
-    console.log('Soft stop');
-    console.log(typeof this.context);  
   }
   
 }
