@@ -7,7 +7,7 @@ class Player {
     
     this.context = new AudioContext();
     this.playlist = new Playlist(playlist);
-    this.buffer = new Buffer(this.context, [this.playlist.getCurrent()]);    
+    // this.buffer = new Buffer(this.context, [this.playlist.getCurrent()]);    
     
     // получаем элементы фронтэнда
     this.highButton = document.querySelector('#volumeHigh');
@@ -39,8 +39,13 @@ class Player {
   }
   
   play() {
-    this.sound = new Sound(this.context, this.buffer.getSound());
-    this.sound.play();
+    let promise = new Promise ((resolve, reject)=>{
+      this.buffer = new Buffer(this.context, [this.playlist.getCurrent()]);    
+    }).then(function(result){
+      this.sound = new Sound(this.context, result.getSound());
+      this.sound.play();
+    });
+   
   }
   
   next() {
