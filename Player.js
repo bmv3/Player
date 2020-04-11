@@ -2,13 +2,12 @@
 
 class Player {
   constructor(playlist) {
-    this.currentTrack = 0;
     this.volume = 0;
+    this.track = null;
     
     this.context = new AudioContext();
     this.playlist = new Playlist(playlist);
-    // this.buffer = new Buffer(this.context, [this.playlist.getCurrent()]);    
-    
+
     // получаем элементы фронтэнда
     this.highButton = document.querySelector('#volumeHigh');
     this.lowButton  = document.querySelector('#volumeLow');
@@ -30,40 +29,51 @@ class Player {
 
   volumeHigh() {
     this.volume = this.volume >= 100 ? this.volume = 100 : ++this.volume;
-    this.sound.setVolume(this.volume);
+    this.track.setVolume(this.volume);
   }
 
   volumeLow() {
     this.volume = this.volume <= 0 ? this.volume = 0 : --this.volume;
-    this.sound.setVolume(this.volume);
+    this.track.setVolume(this.volume);
   }
   
   play() {
-    let promise = new Promise ((resolve, reject)=>{
-      this.buffer = new Buffer(this.context, [this.playlist.getCurrent()]);    
-    }).then(function(result){
-      this.sound = new Sound(this.context, result.getSound());
-      this.sound.play();
-    });
-   
+    if(this.track == null) {
+      this.track = new Track(this.context, this.playlist.getCurrent());
+    }
+    this.track.resume();
+    this.track.play();
   }
   
   next() {
-    this.sound.stop();
+    if(this.track != null) {
+      this.track.stop();
+    }
     this.playlist.next();
+    this.play();
   }
   
   prev() {
-    this.sound.stop();
+    if (this.track != null) {
+      this.track.stop();
+    }
+    this.track.stop();
     this.playlist.prev();
+    this.play();
   } 
   
   stop() {
-    this.sound.stop();
+    if (this.track != null) {
+      this.track.stop();
+    }
   }
   
   soft() {
-    this.sound.soft();
+    if (this.track != null) {
+      this.track.soft();
+    }
+    this.playlist.next();
+    this.play();
   }
   
 }

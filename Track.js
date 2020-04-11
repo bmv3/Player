@@ -1,6 +1,6 @@
 'use strict';
 
-class Sound {
+class Track {
 
   constructor(context, buffer) {
     this.context = context;
