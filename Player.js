@@ -39,35 +39,31 @@ class Player {
   
   play() {
     console.clear();
-    console.log(this.track);
-    
+
     if(this.track == null) {
       this.track = new Track(this.context, this.playlist.getCurrent());
     }
     console.log(this.track);
-    // this.track.resume();
     this.track.play();
   }
   
   next() {
-
-
-    console.log(this.playlist.getCurrent());
-    this.playlist.next();
-    console.log(this.playlist.getCurrent());
-
-    this.track.stop();
-    this.track = null;
-    this.play();
+    if (this.track!==null) {
+      this.track.stop();
+      this.track = null;
+      this.playlist.next();
+      this.play();
+    }
+    
   }
   
   prev() {
-    if (this.track != null) {
+    if (this.track !== null) {
       this.track.stop();
+      this.track = null;
+      this.playlist.prev();
+      this.play();
     }
-    this.track.stop();
-    this.playlist.prev();
-    this.play();
   } 
   
   stop() {

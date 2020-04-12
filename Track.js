@@ -9,16 +9,23 @@ class Track {
   }
   
   loadTrack(url) {
-    let request = new XMLHttpRequest();
-    request.open('get', url, true);
-    request.responseType = 'arraybuffer';
+    let source = this.context.createBufferSource();
+
     let thisBuffer = this;
-    request.onload = function() {
-      thisBuffer.context.decodeAudioData(request.response, function(buffer) {
-        thisBuffer.buffer = buffer;
+    
+    return fetch(url)
+      .then(function(response) {
+        if (!response.ok) {
+          throw new Error("HTTP error, status = " + response.status);
+        }
+        return response.arrayBuffer();
+      })
+      .then(function(buffer) {
+        thisBuffer.context.decodeAudioData(buffer, function(decodedData) {
+          thisBuffer.source.buffer = decodedData;
+          thisBuffer.source.connect(thisBuffer.context.destination);
+        });
       });
-    };
-    request.send();
   }
 
   setup() {
