@@ -2,8 +2,8 @@
 
 class Player {
   constructor(playlist) {
-    this.volume = 0;
-    this.track = null;
+    this.volume = 20;
+    this.track = undefined;
     
     this.context = new AudioContext();
     this.playlist = new Playlist(playlist);
@@ -38,41 +38,48 @@ class Player {
   }
   
   play() {
-    if(this.track == null) {
+    
+    if (this.track == undefined) {
       this.track = new Track(this.context, this.playlist.getCurrent());
     }
     
+    console.clear();
+    console.log(this);
+    console.log(this.playlist.current);
+    console.log(this.playlist.playlist.length);
     this.track.play();
+    this.track.setVolume(this.volume);
+    
   }
   
   next() {
-    if (this.track!==null) {
+    if ( this.track !== undefined) {
       this.playlist.next();
       this.track.stop();
-      this.track = null;
+      this.track = undefined;
       this.play();
     }
     
   }
   
   prev() {
-    if (this.track !== null) {
+    if (this.track !== undefined) {
       this.playlist.prev();
       this.track.stop();
-      this.track = null;
+      this.track = undefined;
       this.play();
     }
   } 
   
   stop() {
-    if (this.track != null) {
+    if (this.track != undefined) {
       this.track.stop();
-      this.track = null;
+      this.track = undefined;
     }
   }
   
   soft() {
-    if (this.track != null) {
+    if (this.track != undefined) {
       this.track.soft();
     }
     this.playlist.next();

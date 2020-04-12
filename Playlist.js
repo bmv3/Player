@@ -8,7 +8,7 @@ class Playlist {
   }
   
   next() {
-    this.current >= this.playlist.length ? this.current = this.playlist.length : ++this.current;
+    this.current >= this.playlist.length - 1 ? this.current = this.playlist.length - 1 : ++this.current;
   }
 
   prev() {
