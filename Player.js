@@ -38,20 +38,18 @@ class Player {
   }
   
   play() {
-    console.clear();
-
     if(this.track == null) {
       this.track = new Track(this.context, this.playlist.getCurrent());
     }
-    console.log(this.track);
+    
     this.track.play();
   }
   
   next() {
     if (this.track!==null) {
+      this.playlist.next();
       this.track.stop();
       this.track = null;
-      this.playlist.next();
       this.play();
     }
     
@@ -59,9 +57,9 @@ class Player {
   
   prev() {
     if (this.track !== null) {
+      this.playlist.prev();
       this.track.stop();
       this.track = null;
-      this.playlist.prev();
       this.play();
     }
   } 
@@ -69,6 +67,7 @@ class Player {
   stop() {
     if (this.track != null) {
       this.track.stop();
+      this.track = null;
     }
   }
   
