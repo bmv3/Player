@@ -2,9 +2,23 @@
 
 class Track {
 
-  constructor(context, buffer) {
+  constructor(context, url) {
     this.context = context;
-    this.buffer = buffer;
+    this.url = url;
+    this.loadTrack(url);
+  }
+  
+  loadTrack(url) {
+    let request = new XMLHttpRequest();
+    request.open('get', url, true);
+    request.responseType = 'arraybuffer';
+    let thisBuffer = this;
+    request.onload = function() {
+      thisBuffer.context.decodeAudioData(request.response, function(buffer) {
+        thisBuffer.buffer = buffer;
+      });
+    };
+    request.send();
   }
 
   setup() {
