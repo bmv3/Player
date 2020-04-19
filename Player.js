@@ -43,13 +43,24 @@ class Player {
       this.track = new Track(this.context, this.playlist.getCurrent());
     }
     
-    console.clear();
-    console.log(this);
-    console.log(this.playlist.current);
-    console.log(this.playlist.playlist.length);
+    this.playButton.classList.add('player_control-buttons_pause');
+    
+    console.log(this.track.context.state);
+    
     this.track.play();
     this.track.setVolume(this.volume);
     
+    /*
+      if (audioCtx.state === 'running') {
+        audioCtx.suspend().then(function() {
+          susresBtn.textContent = 'Resume context';
+        });
+      } else if (audioCtx.state === 'suspended') {
+        audioCtx.resume().then(function() {
+          susresBtn.textContent = 'Suspend context';
+        });
+      }
+    */
   }
   
   next() {
@@ -76,6 +87,9 @@ class Player {
       this.track.stop();
       this.track = undefined;
     }
+    
+    
+    this.playButton.classList.remove('player_control-buttons_pause');
   }
   
   soft() {
