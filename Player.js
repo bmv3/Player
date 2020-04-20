@@ -4,22 +4,22 @@ class Player {
   constructor(playlist) {
     this.volume = 20;
     this.track = undefined;
-    
+
     this.context = new AudioContext();
     this.playlist = new Playlist(playlist);
 
     // получаем элементы фронтэнда
     this.highButton = document.querySelector('#volumeHigh');
-    this.lowButton  = document.querySelector('#volumeLow');
+    this.lowButton = document.querySelector('#volumeLow');
     this.playButton = document.querySelector('#play');
     this.nextButton = document.querySelector('#next');
     this.prevButton = document.querySelector('#prev');
     this.stopButton = document.querySelector('#stop');
     this.softButton = document.querySelector('#soft');
-    
+
     // связывает фрронтэнд с функционалом
     this.highButton.onclick = () => this.volumeHigh();
-    this.lowButton.onclick  = () => this.volumeLow();
+    this.lowButton.onclick = () => this.volumeLow();
     this.playButton.onclick = () => this.play();
     this.nextButton.onclick = () => this.next();
     this.prevButton.onclick = () => this.prev();
@@ -36,20 +36,20 @@ class Player {
     this.volume = this.volume <= 0 ? this.volume = 0 : --this.volume;
     this.track.setVolume(this.volume);
   }
-  
+
   play() {
-    
+
     if (this.track == undefined) {
       this.track = new Track(this.context, this.playlist.getCurrent());
     }
-    
+
     this.playButton.classList.add('player_control-buttons_pause');
-    
+
     // if (this.track.context.state!=="running") {
-      this.track.play();
-      this.track.setVolume(this.volume);
+    this.track.play();
+    this.track.setVolume(this.volume);
     // }
-    
+
     /*
       if (audioCtx.state === 'running') {
         audioCtx.suspend().then(function() {
@@ -62,17 +62,17 @@ class Player {
       }
     */
   }
-  
+
   next() {
-    if ( this.track !== undefined) {
+    if (this.track !== undefined) {
       this.playlist.next();
       this.track.stop();
       this.track = undefined;
       this.play();
     }
-    
+
   }
-  
+
   prev() {
     if (this.track !== undefined) {
       this.playlist.prev();
@@ -80,18 +80,18 @@ class Player {
       this.track = undefined;
       this.play();
     }
-  } 
-  
+  }
+
   stop() {
     if (this.track != undefined) {
       this.track.stop();
       this.track = undefined;
     }
-    
-    
+
+
     this.playButton.classList.remove('player_control-buttons_pause');
   }
-  
+
   soft() {
     if (this.track != undefined) {
       this.track.soft();
@@ -99,5 +99,5 @@ class Player {
     this.playlist.next();
     this.play();
   }
-  
+
 }

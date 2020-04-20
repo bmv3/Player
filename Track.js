@@ -7,12 +7,12 @@ class Track {
     this.url = url;
     this.loadTrack(url);
   }
-  
+
   loadTrack(url) {
     let source = this.context.createBufferSource();
 
     let thisBuffer = this;
-    
+
     return fetch(url)
       .then(function(response) {
         if (!response.ok) {
@@ -45,17 +45,17 @@ class Track {
     this.gainNode.gain.exponentialRampToValueAtTime(0.01, this.context.currentTime + 0.5);
     this.source.stop(this.context.currentTime + 0.5);
   }
-  
+
   soft() {
     this.gainNode.gain.setValueAtTime(0.5, this.context.currentTime);
     this.source.stop(5);
   }
-  
-  
+
+
   setVolume(volume) {
     this.gainNode.gain.value = volume / 100;
     this.gainNode.gain.setValueAtTime(this.gainNode.gain.value, this.context.currentTime);
-    
+
     console.log(this.gainNode.gain.value);
   }
 
