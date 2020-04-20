@@ -45,10 +45,10 @@ class Player {
     
     this.playButton.classList.add('player_control-buttons_pause');
     
-    console.log(this.track.context.state);
-    
-    this.track.play();
-    this.track.setVolume(this.volume);
+    // if (this.track.context.state!=="running") {
+      this.track.play();
+      this.track.setVolume(this.volume);
+    // }
     
     /*
       if (audioCtx.state === 'running') {
