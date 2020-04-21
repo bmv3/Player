@@ -6,12 +6,13 @@ class Track {
     this.context = new AudioContext();
   
     this.myAudio = new Audio(url);
-    this.myAudio.play();
     this.myAudio.crossOrigin = 'anonymous';
   
     this.source = this.context.createMediaElementSource(this.myAudio);
     this.gainNode = this.context.createGain();
     this.source.connect(this.gainNode);
+    this.gainNode.connect(this.context.destination);
+    this.gainNode.gain.setValueAtTime(1, this.context.currentTime);
 
  }
 
@@ -44,28 +45,25 @@ class Track {
   // }
 
   play() {
-    // this.myAudio.start(this.context.currentTime);
-    this.gainNode.connect(this.context.destination);
-    this.gainNode.gain.setValueAtTime(1, this.context.currentTime);
-    
+    this.myAudio.play();
   }
 
   stop() {
     this.myAudio.pause();
-
+    this.myAudio.src = '';
+}
+  
+  pause() {
+    this.myAudio.pause();
   }
-
-  soft() {
-    this.long = 5;
-    this.gainNode.gain.linearRampToValueAtTime(0, this.context.currentTime + this.long);
+  
+  soft(long) {
+    this.gainNode.gain.linearRampToValueAtTime(0, this.context.currentTime + long);
   }
 
 
   setVolume(volume) {
-    this.gainNode.gain.value = volume / 100;
-    this.gainNode.gain.setValueAtTime(this.gainNode.gain.value, this.context.currentTime);
-
-    console.log(this.gainNode.gain.value);
+    this.myAudio.volume = volume / 100;
   }
 
 }

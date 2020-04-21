@@ -130,3 +130,8 @@ li a {
   background-size: cover;
   background-image: url(i/equalizer.svg)
 }
+
+.player_control-buttons_pause {
+  background-size: cover;
+  background-image: url(i/pause.svg)
+}

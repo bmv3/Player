@@ -4,6 +4,7 @@ class Player {
   constructor(playlist) {
     this.volume = 20;
     this.track = undefined;
+    this.longsoft = 5;
 
     this.context = new AudioContext();
     this.playlist = new Playlist(playlist);
@@ -38,30 +39,11 @@ class Player {
   }
 
   play() {
-
     if (this.track == undefined) {
-      // this.track = new Track(this.context, this.playlist.getCurrent());
       this.track = new Track(this.playlist.getCurrent());
     }
-
-    // this.playButton.classList.add('player_control-buttons_pause');
-
-    // if (this.track.context.state!=="running") {
+    this.playButton.classList.add('player_control-buttons_pause');
     this.track.play();
-    // this.track.setVolume(this.volume);
-    // }
-
-    /*
-      if (audioCtx.state === 'running') {
-        audioCtx.suspend().then(function() {
-          susresBtn.textContent = 'Resume context';
-        });
-      } else if (audioCtx.state === 'suspended') {
-        audioCtx.resume().then(function() {
-          susresBtn.textContent = 'Suspend context';
-        });
-      }
-    */
   }
 
   next() {
@@ -89,13 +71,12 @@ class Player {
       this.track = undefined;
     }
 
-
     this.playButton.classList.remove('player_control-buttons_pause');
   }
 
   soft() {
     if (this.track != undefined) {
-      this.track.soft();
+      this.track.soft(this.longsoft);
     }
     this.playlist.next();
     this.play();
