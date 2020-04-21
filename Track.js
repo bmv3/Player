@@ -2,53 +2,62 @@
 
 class Track {
 
-  constructor(context, url) {
-    this.context = context;
-    this.url = url;
-    this.loadTrack(url);
-  }
-
-  loadTrack(url) {
-    let source = this.context.createBufferSource();
-
-    let thisBuffer = this;
-
-    return fetch(url)
-      .then(function(response) {
-        if (!response.ok) {
-          throw new Error("HTTP error, status = " + response.status);
-        }
-        return response.arrayBuffer();
-      })
-      .then(function(buffer) {
-        thisBuffer.context.decodeAudioData(buffer, function(decodedData) {
-          thisBuffer.source.buffer = decodedData;
-          thisBuffer.source.connect(thisBuffer.context.destination);
-        });
-      });
-  }
-
-  setup() {
+  constructor(url) {
+    this.context = new AudioContext();
+  
+    this.myAudio = new Audio(url);
+    this.myAudio.play();
+    this.myAudio.crossOrigin = 'anonymous';
+  
+    this.source = this.context.createMediaElementSource(this.myAudio);
     this.gainNode = this.context.createGain();
-    this.source = this.context.createBufferSource();
-    this.source.buffer = this.buffer;
     this.source.connect(this.gainNode);
-    this.gainNode.connect(this.context.destination);
-  }
+
+ }
+
+  // loadTrack(url) {
+  //   let source = this.context.createBufferSource();
+
+  //   let thisBuffer = this;
+
+  //   return fetch(url)
+  //     .then(function(response) {
+  //       if (!response.ok) {
+  //         throw new Error("HTTP error, status = " + response.status);
+  //       }
+  //       return response.arrayBuffer();
+  //     })
+  //     .then(function(buffer) {
+  //       thisBuffer.context.decodeAudioData(buffer, function(decodedData) {
+  //         thisBuffer.source.buffer = decodedData;
+  //         thisBuffer.source.connect(thisBuffer.context.destination);
+  //       });
+  //     });
+  // }
+
+  // setup() {
+  //   this.gainNode = this.context.createGain();
+  //   this.source = this.context.createBufferSource();
+  //   this.source.buffer = this.buffer;
+  //   this.source.connect(this.gainNode);
+  //   this.gainNode.connect(this.context.destination);
+  // }
 
   play() {
-    this.setup();
-    this.source.start(this.context.currentTime);
+    // this.myAudio.start(this.context.currentTime);
+    this.gainNode.connect(this.context.destination);
+    this.gainNode.gain.setValueAtTime(1, this.context.currentTime);
+    
   }
 
   stop() {
-    this.gainNode.gain.exponentialRampToValueAtTime(0.01, this.context.currentTime + 0.5);
-    this.source.stop(this.context.currentTime + 0.5);
+    this.myAudio.pause();
+
   }
 
   soft() {
-    this.gainNode.gain.setValueAtTime(0.5, this.context.currentTime);
-    this.source.stop(5);
+    this.long = 5;
+    this.gainNode.gain.linearRampToValueAtTime(0, this.context.currentTime + this.long);
   }
 
 

@@ -40,14 +40,15 @@ class Player {
   play() {
 
     if (this.track == undefined) {
-      this.track = new Track(this.context, this.playlist.getCurrent());
+      // this.track = new Track(this.context, this.playlist.getCurrent());
+      this.track = new Track(this.playlist.getCurrent());
     }
 
-    this.playButton.classList.add('player_control-buttons_pause');
+    // this.playButton.classList.add('player_control-buttons_pause');
 
     // if (this.track.context.state!=="running") {
     this.track.play();
-    this.track.setVolume(this.volume);
+    // this.track.setVolume(this.volume);
     // }
 
     /*
