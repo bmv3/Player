@@ -73,6 +73,14 @@ body {
   padding: 0;
 }
 
+.player_control-volume-scale {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  color: blueviolet;
+  cursor: pointer;
+}
+
 ul {
   display: flex;
   flex-wrap: wrap;

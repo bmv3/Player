@@ -33,11 +33,22 @@
        </ul>
      </div>
      <div class="player_control-volume">
-       <ul>
-         <li id="volumeLow"><a href="#" title="Low">-</a></li>
-         <li><a href="#" title="Volume">|</a></li>
-         <li id="volumeHigh"><a href="#" title="High">+</a></li>
-       </ul>
+       <a href="#" title="Low">-</a>
+       <input type="range" list="volume-values" class="player_control-volume-scale" id="volume">
+       <datalist id="volume-values" min="0" max="100" step="0.01">
+         <option value="0" label="0%" />
+         <option value="10" />
+         <option value="20" />
+         <option value="30" />
+         <option value="40" />
+         <option value="50" label="50%" />
+         <option value="60" />
+         <option value="70" />
+         <option value="80" />
+         <option value="90" />
+         <option value="100" label="100%" />
+       </datalist>
+       <a href="#" title="High">+</a>
      </div>
     </div>
    </div>

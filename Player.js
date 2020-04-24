@@ -2,16 +2,14 @@
 
 class Player {
   constructor(playlist) {
-    this.volume = 20;
     this.track = undefined;
-    this.longsoft = 5;
+    this.longsoft = 10;
 
     this.context = new AudioContext();
     this.playlist = new Playlist(playlist);
 
     // получаем элементы фронтэнда
-    this.highButton = document.querySelector('#volumeHigh');
-    this.lowButton = document.querySelector('#volumeLow');
+    this.volumeControl = document.querySelector('#volume');
     this.playButton = document.querySelector('#play');
     this.nextButton = document.querySelector('#next');
     this.prevButton = document.querySelector('#prev');
@@ -19,8 +17,8 @@ class Player {
     this.softButton = document.querySelector('#soft');
 
     // связывает фрронтэнд с функционалом
-    this.highButton.onclick = () => this.volumeHigh();
-    this.lowButton.onclick = () => this.volumeLow();
+    // this.volumeControl.addEventListener("input", this.volume, false);
+    this.volumeControl.onclick = () => this.volume();
     this.playButton.onclick = () => this.play();
     this.nextButton.onclick = () => this.next();
     this.prevButton.onclick = () => this.prev();
@@ -28,22 +26,21 @@ class Player {
     this.softButton.onclick = () => this.soft();
   }
 
-  volumeHigh() {
-    this.volume = this.volume >= 100 ? this.volume = 100 : ++this.volume;
-    this.track.setVolume(this.volume);
-  }
-
-  volumeLow() {
-    this.volume = this.volume <= 0 ? this.volume = 0 : --this.volume;
-    this.track.setVolume(this.volume);
+  volume() {
+    this.track.setVolume(this.volumeControl.value);
   }
 
   play() {
-    if (this.track == undefined) {
+    if (this.track === undefined) {
       this.track = new Track(this.playlist.getCurrent());
+      this.track.myAudio.onended = () => {
+        this.playButton.classList.remove('player_control-buttons_pause');
+        this.track = undefined;
+      }
+      this.playButton.classList.add('player_control-buttons_pause');
+      this.track.play();
     }
-    this.playButton.classList.add('player_control-buttons_pause');
-    this.track.play();
+    this.track.myAudio.onplaying = () => console.log('Video is no longer paused');
   }
 
   next() {
