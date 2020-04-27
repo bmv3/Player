@@ -10,7 +10,11 @@ class Track {
   
     this.source = this.context.createMediaElementSource(this.myAudio);
     this.gainNode = this.context.createGain();
-    this.source.connect(this.gainNode);
+    this.analyserNode = this.context.createAnalyser();
+    this.analyserNode.fftSize = 2048;
+    
+    this.source.connect(this.analyserNode);
+    this.analyserNode.connect(this.gainNode);
     this.gainNode.connect(this.context.destination);
     this.gainNode.gain.setValueAtTime(1, this.context.currentTime);
 
@@ -35,6 +39,10 @@ class Track {
 
   setVolume(volume) {
     this.myAudio.volume = volume / 100;
+  }
+  
+  visualisation() {
+    
   }
 
 }
