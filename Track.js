@@ -7,51 +7,30 @@ class Track {
   
     this.myAudio = new Audio(url);
     this.myAudio.crossOrigin = 'anonymous';
+    this.controls = 'true';
+
   
     this.source = this.context.createMediaElementSource(this.myAudio);
+    this.analyser = this.context.createAnalyser();
     this.gainNode = this.context.createGain();
-    this.source.connect(this.gainNode);
+    
+    this.source.connect(this.analyser);
+    this.analyser.connect(this.gainNode)
     this.gainNode.connect(this.context.destination);
+    
     this.gainNode.gain.setValueAtTime(1, this.context.currentTime);
-
  }
-
-  // loadTrack(url) {
-  //   let source = this.context.createBufferSource();
-
-  //   let thisBuffer = this;
-
-  //   return fetch(url)
-  //     .then(function(response) {
-  //       if (!response.ok) {
-  //         throw new Error("HTTP error, status = " + response.status);
-  //       }
-  //       return response.arrayBuffer();
-  //     })
-  //     .then(function(buffer) {
-  //       thisBuffer.context.decodeAudioData(buffer, function(decodedData) {
-  //         thisBuffer.source.buffer = decodedData;
-  //         thisBuffer.source.connect(thisBuffer.context.destination);
-  //       });
-  //     });
-  // }
-
-  // setup() {
-  //   this.gainNode = this.context.createGain();
-  //   this.source = this.context.createBufferSource();
-  //   this.source.buffer = this.buffer;
-  //   this.source.connect(this.gainNode);
-  //   this.gainNode.connect(this.context.destination);
-  // }
 
   play() {
     this.myAudio.play();
+    
+    new Equalizer(this);
   }
 
   stop() {
     this.myAudio.pause();
     this.myAudio.src = '';
-}
+  }
   
   pause() {
     this.myAudio.pause();

@@ -17,7 +17,6 @@ class Player {
     this.softButton = document.querySelector('#soft');
 
     // связывает фрронтэнд с функционалом
-    // this.volumeControl.addEventListener("input", this.volume, false);
     this.volumeControl.onclick = () => this.volume();
     this.playButton.onclick = () => this.play();
     this.nextButton.onclick = () => this.next();
@@ -33,6 +32,9 @@ class Player {
   play() {
     if (this.track === undefined) {
       this.track = new Track(this.playlist.getCurrent());
+      
+      document.title = this.playlist.getCurrent()['name'] || "Название трека";
+      
       this.track.myAudio.onended = () => {
         this.playButton.classList.remove('player_control-buttons_pause');
         this.track = undefined;
